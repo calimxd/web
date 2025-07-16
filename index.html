@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Chavo del 8 - Episodios Completos</title>
+    <meta name="description" content="Disfruta de todos los episodios de El Chavo del 8 organizados por temporadas">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>El Chavo del 8</h1>
+                <span class="subtitle">Episodios Completos</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#temporadas" class="nav-link">Temporadas</a></li>
+                    <li><a href="#reproductor" class="nav-link">Reproductor</a></li>
+                    <li><a href="instrucciones.html" class="nav-link">Ayuda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h2 class="hero-title">¡Fue sin querer queriendo!</h2>
+                <p class="hero-description">Revive los mejores momentos de la vecindad más querida de México</p>
+                <button class="hero-btn" onclick="scrollToTemporadas()">Ver Episodios</button>
+            </div>
+            <div class="hero-image">
+                <div class="chavo-illustration">🏠</div>
+            </div>
+        </section>
+
+        <section id="temporadas" class="temporadas">
+            <div class="container">
+                <h2 class="section-title">Temporadas</h2>
+                <div class="seasons-filter">
+                    <button class="filter-btn active" data-season="all">Todas</button>
+                    <button class="filter-btn" data-season="1">Temporada 1</button>
+                    <button class="filter-btn" data-season="2">Temporada 2</button>
+                    <button class="filter-btn" data-season="3">Temporada 3</button>
+                    <button class="filter-btn" data-season="4">Temporada 4</button>
+                    <button class="filter-btn" data-season="5">Temporada 5</button>
+                    <button class="filter-btn" data-season="6">Temporada 6</button>
+                    <button class="filter-btn" data-season="7">Temporada 7</button>
+                    <button class="filter-btn" data-season="8">Temporada 8</button>
+                    <button class="filter-btn" data-season="9">Temporada 9</button>
+                </div>
+                <div class="episodes-grid" id="episodesGrid">
+                    <!-- Los episodios se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <section id="reproductor" class="player-section" style="padding: 2rem 0;">
+            <div class="container">
+                <h2 class="section-title">Reproductor</h2>
+                <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎬</div>
+                    <h3 style="margin-bottom: 1rem; font-family: 'Fredoka One', cursive;">¡Haz clic en cualquier episodio!</h3>
+                    <p style="margin-bottom: 2rem; opacity: 0.9;">Los episodios se abrirán en una ventana modal para una mejor experiencia</p>
+                    <button onclick="scrollToTemporadas()" style="background: #FFD700; color: #333; border: none; padding: 1rem 2rem; font-size: 1.1rem; font-weight: bold; border-radius: 10px; cursor: pointer;">
+                        📺 Ver Episodios
+                    </button>
+                </div>
+                <div class="play-mode-toggle">
+                    <button id="playModeToggle" class="play-mode-btn" onclick="togglePlayMode()">
+                        🖥️ Reproducir en nueva ventana
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 - El Chavo del 8. Todos los derechos reservados a Roberto Gómez Bolaños</p>
+        </div>
+    </footer>
+
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Cargando episodios...</p>
+    </div>
+
+    <!-- Modal del reproductor -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Reproductor</h2>
+                <button class="close-modal" onclick="closeEpisodeModal()">×</button>
+            </div>
+            <div class="modal-player" id="modalPlayer">
+                <!-- Contenido del reproductor se carga dinámicamente -->
+            </div>
+            <div class="modal-episode-info">
+                <h3 id="modalEpisodeTitle">Selecciona un episodio</h3>
+                <p id="modalEpisodeDescription">Información del episodio</p>
+                <div class="modal-controls">
+                    <button class="modal-control-btn" id="modalPrevBtn">⏮ Anterior</button>
+                    <button class="modal-control-btn" id="modalNextBtn">Siguiente ⏭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/episodes-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - El Chavo del 8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #b6d4e9;
+            color: #0c5460;
+        }
+        .episodes-count {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .episode-sample {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .episode-title {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .episode-info {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎬 Test de Carga de Episodios - El Chavo del 8</h1>
+        
+        <div id="test-results">
+            <div class="test-result info">
+                <strong>Iniciando pruebas...</strong>
+            </div>
+        </div>
+        
+        <div class="episodes-count" id="episodesCount">
+            Cargando...
+        </div>
+        
+        <div id="episodeSamples">
+            <!-- Muestras de episodios -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="window.location.href='index.html'" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Ir a la Página Principal
+            </button>
+        </div>
+    </div>
+
+    <script src="js/episodes-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const testResults = document.getElementById('test-results');
+            const episodesCount = document.getElementById('episodesCount');
+            const episodeSamples = document.getElementById('episodeSamples');
+            
+            function addTestResult(message, type = 'info') {
+                const div = document.createElement('div');
+                div.className = `test-result ${type}`;
+                div.innerHTML = `<strong>${new Date().toLocaleTimeString()}:</strong> ${message}`;
+                testResults.appendChild(div);
+            }
+            
+            function runTests() {
+                // Test 1: Verificar que episodesData existe
+                if (typeof episodesData === 'undefined') {
+                    addTestResult('❌ Error: Variable episodesData no está definida', 'error');
+                    return;
+                }
+                
+                addTestResult('✅ Variable episodesData está definida', 'success');
+                
+                // Test 2: Verificar que es un array
+                if (!Array.isArray(episodesData)) {
+                    addTestResult('❌ Error: episodesData no es un array', 'error');
+                    return;
+                }
+                
+                addTestResult('✅ episodesData es un array válido', 'success');
+                
+                // Test 3: Verificar cantidad de episodios
+                const count = episodesData.length;
+                if (count === 0) {
+                    addTestResult('❌ Error: No hay episodios en episodesData', 'error');
+                    return;
+                }
+                
+                addTestResult(`✅ Se encontraron ${count} episodios`, 'success');
+                episodesCount.textContent = `Total de episodios: ${count}`;
+                
+                // Test 4: Verificar estructura de episodios
+                const firstEpisode = episodesData[0];
+                const requiredFields = ['id', 'title', 'season', 'episode', 'description', 'url', 'thumbnail'];
+                
+                for (const field of requiredFields) {
+                    if (!firstEpisode.hasOwnProperty(field)) {
+                        addTestResult(`❌ Error: Campo '${field}' faltante en episodios`, 'error');
+                        return;
+                    }
+                }
+                
+                addTestResult('✅ Estructura de episodios es correcta', 'success');
+                
+                // Test 5: Verificar temporadas
+                const seasons = [...new Set(episodesData.map(ep => ep.season))].sort((a, b) => a - b);
+                addTestResult(`✅ Temporadas encontradas: ${seasons.join(', ')}`, 'success');
+                
+                // Test 6: Mostrar muestras de episodios
+                const sampleEpisodes = [
+                    episodesData[0],
+                    episodesData[Math.floor(episodesData.length / 2)],
+                    episodesData[episodesData.length - 1]
+                ];
+                
+                episodeSamples.innerHTML = '<h3>Muestras de Episodios:</h3>';
+                sampleEpisodes.forEach((ep, index) => {
+                    const labels = ['Primer episodio', 'Episodio del medio', 'Último episodio'];
+                    const div = document.createElement('div');
+                    div.className = 'episode-sample';
+                    div.innerHTML = `
+                        <div class="episode-title">${labels[index]}: ${ep.title}</div>
+                        <div class="episode-info">
+                            Temporada ${ep.season}, Episodio ${ep.episode}<br>
+                            ${ep.description}<br>
+                            URL: ${ep.url}<br>
+                            Thumbnail: ${ep.thumbnail}
+                        </div>
+                    `;
+                    episodeSamples.appendChild(div);
+                });
+                
+                addTestResult('✅ Todas las pruebas pasaron exitosamente', 'success');
+                addTestResult('🎉 La página está lista para usar', 'success');
+            }
+            
+            // Ejecutar pruebas después de un pequeño delay
+            setTimeout(runTests, 100);
+        });
+    </script>
+</body>
+</html>
